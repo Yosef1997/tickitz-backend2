@@ -56,7 +56,7 @@ exports.getCinemaByCondition = (cond) => {
   })
 }
 
-exports.getAllCinematByCondition = (id, cond) => {
+exports.getAllCinemaByCondition = (cond) => {
   return new Promise((resolve, reject) => {
     const query = db.query(`
     SELECT * 
@@ -72,7 +72,7 @@ exports.getAllCinematByCondition = (id, cond) => {
   })
 }
 
-exports.getCountCinematByCondition = (cond) => {
+exports.getCountCinemaByCondition = (cond) => {
   return new Promise((resolve, reject) => {
     const query = db.query(`
     SELECT COUNT(id) as totalData 

@@ -23,8 +23,9 @@ exports.getCinema = async (req, res) => {
       totalData = await cinemaModel.getCountCinema(cond)
       totalPage = Math.ceil(Number(totalData[0].totalData) / cond.limit)
     }
-
+    console.log(totalData)
     const results = await cinemaModel.getAllCinemaByCondition(cond)
+    console.log(results)
 
     return response(
       res,
