@@ -18,6 +18,8 @@ app.use('/upload', express.static('./upload'))
 app.use('/auth', require('./src/routes/auth'))
 // user
 app.use('/user', require('./src/routes/profile'))
+// cinema
+app.use('/cinema', require('./src/routes/cinema'))
 
 app.listen(APP_PORT, () => {
   console.log(`App is running on port 8080 ${APP_PORT}`)
