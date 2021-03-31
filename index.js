@@ -20,6 +20,8 @@ app.use('/auth', require('./src/routes/auth'))
 app.use('/user', require('./src/routes/profile'))
 // cinema
 app.use('/cinema', require('./src/routes/cinema'))
+// location
+app.use('/location', require('./src/routes/location'))
 
 app.listen(APP_PORT, () => {
   console.log(`App is running on port 8080 ${APP_PORT}`)
