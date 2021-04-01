@@ -26,6 +26,8 @@ app.use('/location', require('./src/routes/location'))
 app.use('/time', require('./src/routes/time'))
 // date
 app.use('/date', require('./src/routes/date'))
+// genre
+app.use('/genre', require('./src/routes/genre'))
 
 app.listen(APP_PORT, () => {
   console.log(`App is running on port 8080 ${APP_PORT}`)
