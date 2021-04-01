@@ -30,6 +30,8 @@ app.use('/date', require('./src/routes/date'))
 app.use('/genre', require('./src/routes/genre'))
 // seat
 app.use('/seat', require('./src/routes/seat'))
+// movie
+app.use('/movie', require('./src/routes/movie'))
 
 app.listen(APP_PORT, () => {
   console.log(`App is running on port 8080 ${APP_PORT}`)
