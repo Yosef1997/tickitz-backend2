@@ -51,9 +51,21 @@ exports.getDetailMovie = async (req, res) => {
   try {
     const { id } = req.params
     const results = await movieGenreModel.getMovieGenreById(id)
-    console.log(results)
+    const output = []
+    results.forEach((item) => {
+      const existing = output.filter((value, index) => {
+        return value.name === item.name
+      })
+      if (existing.length) {
+        const existingIndex = output.indexOf(existing[0])
+        output[existingIndex].genre = output[existingIndex].genre.concat(item.genre)
+      } else {
+        if (typeof item.genre === 'string') { item.genre = [item.genre] }
+        output.push(item)
+      }
+    })
     if (results.length > 0) {
-      return response(res, 200, true, `Detail's ${results.name}`, results)
+      return response(res, 200, true, `Detail's ${results[0].name}`, output)
     }
     return response(res, 404, false, 'Movie not found')
   } catch (err) {

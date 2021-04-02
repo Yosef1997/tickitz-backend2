@@ -1,0 +1,25 @@
+const array = [{
+  name: "foo1",
+  value: "val1"
+}, {
+  name: "foo1",
+  value: ["val2", "val3"]
+}];
+
+const output = [];
+
+array.forEach(function(item) {
+  const existing = output.filter(function(value, index) {
+    return value.name == item.name;
+  });
+  if (existing.length) {
+    const existingIndex = output.indexOf(existing[0]);
+    output[existingIndex].value = output[existingIndex].value.concat(item.value);
+  } else {
+    if (typeof item.value == 'string')
+      item.value = [item.value];
+    output.push(item);
+  }
+});
+
+console.log(output);
