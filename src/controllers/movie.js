@@ -24,9 +24,7 @@ exports.getMovie = async (req, res) => {
       totalData = await movieModel.getCountMovie(cond)
       totalPage = Math.ceil(Number(totalData[0].totalData) / cond.limit)
     }
-    console.log(totalData)
-    const results = await movieGenreModel.getAllMovieGenreByCondition(cond)
-    console.log(results)
+    const results = await movieModel.getAllMovieByCondition(cond)
 
     return response(
       res,
