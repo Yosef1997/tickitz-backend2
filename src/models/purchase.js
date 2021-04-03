@@ -45,19 +45,26 @@ exports.deletePurchaseById = (id) => {
   })
 }
 
-exports.getPurchaseById = (id) => {
+exports.getCountPurchaseByCondition = (cond) => {
   return new Promise((resolve, reject) => {
     const query = db.query(`
-    SELECT p.id, p.createdBy, m.name as movie, d.date as date, L.name as location, c.name as cinema, c.picture as picture, t.time as time,s.name as seat
-    FROM movie m
-    INNER JOIN purchase p ON m.id=p.idMovie
-    INNER JOIN date d ON d.id=p.idDate
-    INNER JOIN location L ON L.id=p.idLocation
-    INNER JOIN cinema c ON c.id=p.idCinema
-    INNER JOIN time t ON t.id=p.idTime
-    INNER JOIN seat s ON s.id=p.idSeat
-    WHERE p.id=${id}
-  `, (err, res, field) => {
+    SELECT COUNT(id) as totalData 
+    FROM purchase 
+    WHERE movie LIKE "%${cond.search}%"
+    `, (err, res, field) => {
+      if (err) reject(err)
+      resolve(res)
+    })
+    console.log(query.sql)
+  })
+}
+
+exports.getCountPurchase = () => {
+  return new Promise((resolve, reject) => {
+    const query = db.query(`
+    SELECT COUNT(id) as totalData 
+    FROM purchase
+    `, (err, res, field) => {
       if (err) reject(err)
       resolve(res)
     })
@@ -68,14 +75,9 @@ exports.getPurchaseById = (id) => {
 exports.getAllPurchaseByCondition = (cond) => {
   return new Promise((resolve, reject) => {
     const query = db.query(`
-    SELECT p.id, p.createdBy, m.name as movie, d.date as date, L.name as location, c.name as cinema, t.time as time
-    FROM purchase p
-    INNER JOIN movie m ON m.id=p.idMovie
-    INNER JOIN date d ON d.id=p.idDate
-    INNER JOIN location L ON L.id=p.idLocation
-    INNER JOIN cinema c ON c.id=p.idCinema
-    INNER JOIN time t ON t.id=p.idTime
-    WHERE m.name LIKE "%${cond.search}%"
+    SELECT *
+    FROM purchase 
+    WHERE movie LIKE "%${cond.search}%"
     ORDER BY ${cond.sort} ${cond.order}
     LIMIT ${cond.limit} OFFSET ${cond.offset}
     `, (err, res, field) => {

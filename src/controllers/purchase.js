@@ -21,7 +21,7 @@ exports.getPurchase = async (req, res) => {
       totalData = await purchaseModel.getCountPurchaseByCondition(cond)
       totalPage = Math.ceil(Number(totalData[0].totalData) / cond.limit)
     } else {
-      totalData = await purchaseModel.getCountPurchase(cond)
+      totalData = await purchaseModel.getCountPurchase()
       totalPage = Math.ceil(Number(totalData[0].totalData) / cond.limit)
     }
     const results = await purchaseModel.getAllPurchaseByCondition(cond)
@@ -48,22 +48,22 @@ exports.getPurchase = async (req, res) => {
 exports.getDetailPurchase = async (req, res) => {
   try {
     const { id } = req.params
-    const results = await purchaseModel.getPurchaseById(id)
+    const results = await purchaseSeatModel.getPurchaseSeatById(id)
     const output = []
     results.forEach((item) => {
       const existing = output.filter((value, index) => {
-        return value.name === item.name
+        return value.movie === item.movie
       })
       if (existing.length) {
         const existingIndex = output.indexOf(existing[0])
         output[existingIndex].seat = output[existingIndex].seat.concat(item.seat)
       } else {
-        if (typeof item.seat === 'string') { item.genre = [item.seat] }
+        if (typeof item.seat === 'string') { item.seat = [item.seat] }
         output.push(item)
       }
     })
     if (results.length > 0) {
-      return response(res, 200, true, `Detail's ${results[0].name}`, output)
+      return response(res, 200, true, `Detail's ${results[0].movie}`, output)
     }
     return response(res, 404, false, 'purchase not found')
   } catch (err) {
