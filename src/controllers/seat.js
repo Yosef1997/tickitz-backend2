@@ -79,3 +79,34 @@ exports.createSeat = async (req, res) => {
     return response(res, 400, false, 'Create seat failed')
   }
 }
+exports.getSeatSold = async (req, res) => {
+  try {
+    const data = req.body
+    const results = await seatModel.soldSeat(data)
+    const output = []
+    results.forEach((item) => {
+      const existing = output.filter((value, index) => {
+        return value.movie === item.movie
+      })
+      if (existing.length) {
+        const existingIndex = output.indexOf(existing[0])
+        output[existingIndex].seat = output[existingIndex].seat.concat(item.seat)
+      } else {
+        if (typeof item.seat === 'string') { item.seat = [item.seat] }
+        output.push(item)
+      }
+    })
+    // const [{ seat }] = output
+    // const listSeat = seat.toString().split('')
+    // const soldSeat = listSeat.filter(item => item !== ',')
+    // const finalResults = soldSeat
+    // console.log(finalResults)
+    if (results.length > 0) {
+      return response(res, 400, true, 'List of sold seat', results)
+    }
+    return response(res, 200, false, 'Sold seat not found')
+  } catch (err) {
+    console.log(err)
+    return response(res, 400, false, 'Bad Request')
+  }
+}

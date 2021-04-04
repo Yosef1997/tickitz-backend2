@@ -98,3 +98,33 @@ exports.getCountSeat = () => {
     console.log(query.sql)
   })
 }
+
+exports.getSoldSeat = (data) => {
+  return new Promise((resolve, reject) => {
+    const query = db.query(`
+    SELECT seat
+    FROM purchase
+    WHERE movie LIKE "%${data.movie}%" AND date LIKE "%${data.date}%" AND location LIKE "%${data.location}%" AND cinema LIKE "%${data.cinema}%" AND time LIKE "%${data.time}%"
+    `, (err, res, field) => {
+      if (err) reject(err)
+      resolve(res)
+    })
+    console.log(query.sql)
+  })
+}
+
+exports.soldSeat = (data) => {
+  return new Promise((resolve, reject) => {
+    const query = db.query(`
+    SELECT p.id, p.movie, p.date, p.location, p.cinema, p.time, p.price, s.id as seat
+    FROM purchase p
+    INNER JOIN purchaseseat ps ON p.id=ps.idPurchase
+    INNER JOIN seat s ON s.id=ps.idSeat
+    WHERE p.movie LIKE "%${data.movie}%" AND p.date LIKE "%${data.date}%" AND p.location LIKE "%${data.location}%" AND p.cinema LIKE "%${data.cinema}%" AND p.time LIKE "%${data.time}%"
+  `, (err, res, field) => {
+      if (err) reject(err)
+      resolve(res)
+    })
+    console.log(query.sql)
+  })
+}

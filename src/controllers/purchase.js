@@ -79,7 +79,7 @@ exports.createPurchase = async (req, res) => {
       if (results.length !== data.idSeat.length) {
         return res.status(400).json({
           success: false,
-          massage: 'Some genre are unavailable'
+          massage: 'Some seat are unavailable'
         })
       } else {
         results.forEach(item => {
@@ -87,11 +87,12 @@ exports.createPurchase = async (req, res) => {
         })
       }
     } else if (typeof data.idSeat === 'string') {
-      const results = await purchaseSeatModel.checkOneGenre(data.idSeat)
-      if (results.length !== data.idSeat.length) {
+      const results = await purchaseSeatModel.checkOneSeat(data.idSeat)
+      console.log(results)
+      if (results.length === 0) {
         return res.status(400).json({
           success: false,
-          massage: 'Some genre are unavailable'
+          massage: 'Some seat are unavailable'
         })
       } else {
         results.forEach(item => {
@@ -114,6 +115,7 @@ exports.createPurchase = async (req, res) => {
       location: data.location,
       cinema: data.cinema,
       time: data.time,
+      seat: selectedSeat,
       price: priceSeat,
       createdBy: req.userData.id
     }
