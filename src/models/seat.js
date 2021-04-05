@@ -116,7 +116,7 @@ exports.getSoldSeat = (data) => {
 exports.soldSeat = (data) => {
   return new Promise((resolve, reject) => {
     const query = db.query(`
-    SELECT p.id, p.movie, p.date, p.location, p.cinema, p.time, p.price, s.id as seat
+    SELECT s.name as seat
     FROM purchase p
     INNER JOIN purchaseseat ps ON p.id=ps.idPurchase
     INNER JOIN seat s ON s.id=ps.idSeat

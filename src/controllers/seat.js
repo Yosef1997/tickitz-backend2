@@ -96,15 +96,11 @@ exports.getSeatSold = async (req, res) => {
         output.push(item)
       }
     })
-    // const [{ seat }] = output
-    // const listSeat = seat.toString().split('')
-    // const soldSeat = listSeat.filter(item => item !== ',')
-    // const finalResults = soldSeat
-    // console.log(finalResults)
+    const [seat] = output
     if (results.length > 0) {
-      return response(res, 400, true, 'List of sold seat', results)
+      return response(res, 200, true, 'List of sold seat', seat)
     }
-    return response(res, 200, false, 'Sold seat not found')
+    return response(res, 400, false, 'Sold seat not found')
   } catch (err) {
     console.log(err)
     return response(res, 400, false, 'Bad Request')
