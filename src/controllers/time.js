@@ -52,7 +52,7 @@ exports.getDetailTime = async (req, res) => {
     const results = await timeModel.getTimeByCondition({ id })
     console.log(results)
     if (results.length === 1) {
-      return response(res, 200, true, `Detail's ${results[0].name}`, results[0])
+      return response(res, 200, true, `Detail's ${results[0].time}`, results[0])
     }
     return response(res, 404, false, 'time not found')
   } catch (err) {
