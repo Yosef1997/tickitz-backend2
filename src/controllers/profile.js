@@ -37,15 +37,11 @@ exports.updateUser = async (req, res) => {
     }
 
     // firstName
-    if (firstName === '' || firstName === null) {
-      await authModel.updateUser(id, { firstName: initialResults[0].firstName })
-    } else {
+    if (firstName !== '') {
       await authModel.updateUser(id, { firstName: firstName })
     }
     // lastName
-    if (lastName === '' || lastName === null) {
-      await authModel.updateUser(id, { lastName: initialResults[0].lastName })
-    } else {
+    if (lastName !== '') {
       await authModel.updateUser(id, { lastName: lastName })
     }
 
@@ -69,6 +65,18 @@ exports.updateUser = async (req, res) => {
       await authModel.updateUser(id, { phoneNumber: initialResults[0].phoneNumber })
     } else {
       await authModel.updateUser(id, { phoneNumber: phoneNumber })
+    }
+
+    if (req.file) {
+      const picture = req.file.filename
+      if (picture !== null) {
+        const updatePicture = await authModel.updateUser(id, { picture })
+        if (updatePicture.affectedRows > 0) {
+          if (initialResults[0].picture !== null) {
+            fs.unlinkSync(`upload/profile/${initialResults[0].picture}`)
+          }
+        }
+      }
     }
 
     // info
