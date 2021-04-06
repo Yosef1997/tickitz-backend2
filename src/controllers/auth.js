@@ -40,8 +40,8 @@ exports.login = async (req, res) => {
     if (existingUser.length > 0) {
       const compare = bcrypt.compareSync(password, existingUser[0].password)
       if (compare) {
-        const { id, email, role, firstname, lastname, phoneNumber, picture } = existingUser[0]
-        const token = jwt.sign({ id, email, role, firstname, lastname, phoneNumber, picture }, APP_KEY)
+        const { id, email, role, firstName, lastName, phoneNumber, picture } = existingUser[0]
+        const token = jwt.sign({ id, email, role, firstName, lastName, phoneNumber, picture }, APP_KEY)
         console.log(token)
         return response(res, 200, true, 'Login succesfully', token)
       } else {
