@@ -11,18 +11,16 @@ exports.updateUser = async (req, res) => {
       lastName,
       fullName,
       email,
-      newPassword,
       password,
       phoneNumber
     } = req.body
     const salt = await bcrypt.genSalt()
-
     const initialResults = await authModel.getUsersByCondition({ id })
     if (initialResults.length < 1) {
       return response(res, 404, false, 'User Not Found')
     }
     // fullName
-    if (fullName !== '' || fullName !== null) {
+    if (fullName !== '' && fullName !== undefined) {
       const mapUsername = fullName.split(' ')
       let firstName = null
       let lastName = null
@@ -37,46 +35,44 @@ exports.updateUser = async (req, res) => {
     }
 
     // firstName
-    if (firstName !== '') {
+    if (firstName !== '' && firstName !== undefined) {
       await authModel.updateUser(id, { firstName: firstName })
     }
     // lastName
-    if (lastName !== '') {
+    if (lastName !== '' && lastName !== undefined) {
       await authModel.updateUser(id, { lastName: lastName })
     }
 
     // email
-    if (email === '' || email === null) {
-      await authModel.updateUser(id, { email: initialResults[0].email })
-    } else {
+    if (email !== '' || email === undefined) {
       await authModel.updateUser(id, { email: email })
     }
     // Password
-    if (password !== '' || password !== null) {
+    if (password !== '' || password !== undefined) {
       const compare = bcrypt.compareSync(password, initialResults[0].password)
-      if (compare) {
-        const encryptedNewPassword = await bcrypt.hash(newPassword, salt)
+      console.log(compare)
+      if (!compare) {
+        const encryptedNewPassword = await bcrypt.hash(password, salt)
+        console.log(encryptedNewPassword)
         await authModel.updateUser(id, { password: encryptedNewPassword })
       }
     }
 
     // phone
-    if (phoneNumber === '' || phoneNumber === null) {
-      await authModel.updateUser(id, { phoneNumber: initialResults[0].phoneNumber })
-    } else {
+    if (phoneNumber !== '') {
       await authModel.updateUser(id, { phoneNumber: phoneNumber })
     }
 
     if (req.file) {
       const picture = req.file.filename
-      if (picture !== null) {
-        const updatePicture = await authModel.updateUser(id, { picture })
-        if (updatePicture.affectedRows > 0) {
-          if (initialResults[0].picture !== null) {
-            fs.unlinkSync(`upload/profile/${initialResults[0].picture}`)
-          }
+      // if (picture !== '') {
+      const updatePicture = await authModel.updateUser(id, { picture })
+      if (updatePicture.affectedRows > 0) {
+        if (initialResults[0].picture !== null) {
+          fs.unlinkSync(`upload/profile/${initialResults[0].picture}`)
         }
       }
+      // }
     }
 
     // info
