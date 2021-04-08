@@ -62,8 +62,9 @@ exports.getDetailMovie = async (req, res) => {
         output.push(item)
       }
     })
+    const [detail] = output
     if (results.length > 0) {
-      return response(res, 200, true, `Detail's ${results[0].name}`, output)
+      return response(res, 200, true, `Detail's ${results[0].name}`, detail)
     }
     return response(res, 404, false, 'Movie not found')
   } catch (err) {
