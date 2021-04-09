@@ -44,11 +44,11 @@ exports.updateUser = async (req, res) => {
     }
 
     // email
-    if (email !== '' || email === undefined) {
+    if (email !== '' && email !== undefined) {
       await authModel.updateUser(id, { email: email })
     }
     // Password
-    if (password !== '' || password !== undefined) {
+    if (password !== '' && password !== undefined) {
       const compare = bcrypt.compareSync(password, initialResults[0].password)
       console.log(compare)
       if (!compare) {
@@ -59,7 +59,7 @@ exports.updateUser = async (req, res) => {
     }
 
     // phone
-    if (phoneNumber !== '') {
+    if (phoneNumber !== '' && phoneNumber !== undefined) {
       await authModel.updateUser(id, { phoneNumber: phoneNumber })
     }
 
