@@ -47,8 +47,8 @@ exports.getPurchase = async (req, res) => {
 }
 exports.getDetailPurchase = async (req, res) => {
   try {
-    const { id } = req.params
-    const results = await purchaseSeatModel.getPurchaseSeatById(id)
+    const { id } = req.userData
+    const results = await purchaseSeatModel.getAllPurchase(id)
     const output = []
     results.forEach((item) => {
       const existing = output.filter((value, index) => {
