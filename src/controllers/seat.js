@@ -82,6 +82,7 @@ exports.createSeat = async (req, res) => {
 exports.getSeatSold = async (req, res) => {
   try {
     const data = req.body
+    console.log(data)
     const results = await seatModel.soldSeat(data)
     const output = []
     results.forEach((item) => {

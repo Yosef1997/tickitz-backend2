@@ -8,7 +8,7 @@ exports.getLocation = async (req, res) => {
     const cond = req.query
     cond.search = cond.search || ''
     cond.page = Number(cond.page) || 1
-    cond.limit = Number(cond.limit) || 4
+    cond.limit = Number(cond.limit) || 10
     cond.offset = (cond.page - 1) * cond.limit
     cond.sort = cond.sort || 'id'
     cond.order = cond.order || 'ASC'
