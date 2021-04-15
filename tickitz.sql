@@ -233,18 +233,6 @@ ALTER TABLE `movie`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `purchase`
---
-ALTER TABLE `purchase`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `seat`
---
-ALTER TABLE `seat`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indeks untuk tabel `time`
 --
 ALTER TABLE `time`
@@ -254,6 +242,18 @@ ALTER TABLE `time`
 -- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `purchase`
+--
+ALTER TABLE `purchase`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `seat`
+--
+ALTER TABLE `seat`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -308,18 +308,6 @@ ALTER TABLE `movie`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT untuk tabel `purchase`
---
-ALTER TABLE `purchase`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT untuk tabel `seat`
---
-ALTER TABLE `seat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
-
---
 -- AUTO_INCREMENT untuk tabel `time`
 --
 ALTER TABLE `time`
@@ -330,6 +318,18 @@ ALTER TABLE `time`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `purchase`
+--
+ALTER TABLE `purchase`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `seat`
+--
+ALTER TABLE `seat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT untuk tabel `purchaseseat`
@@ -348,18 +348,19 @@ ALTER TABLE `moviegenre`
 --
 
 --
+-- Ketidakleluasaan untuk tabel `purchaseseat`
+--
+ALTER TABLE `purchaseseat`
+  ADD CONSTRAINT `purchaseseat_ibfk_1` FOREIGN KEY (`idPurchase`) REFERENCES `purchase` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `purchaseseat_ibfk_2` FOREIGN KEY (`idSeat`) REFERENCES `seat` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
 -- Ketidakleluasaan untuk tabel `moviegenre`
 --
 ALTER TABLE `moviegenre`
   ADD CONSTRAINT `moviegenre_ibfk_1` FOREIGN KEY (`idMovie`) REFERENCES `movie` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `moviegenre_ibfk_2` FOREIGN KEY (`idGenre`) REFERENCES `genre` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
---
--- Ketidakleluasaan untuk tabel `purchaseseat`
---
-ALTER TABLE `purchaseseat`
-  ADD CONSTRAINT `purchaseseat_ibfk_1` FOREIGN KEY (`idPurchase`) REFERENCES `purchase` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `purchaseseat_ibfk_2` FOREIGN KEY (`idSeat`) REFERENCES `seat` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 --

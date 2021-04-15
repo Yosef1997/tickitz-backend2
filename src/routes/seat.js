@@ -4,7 +4,7 @@ const authMiddleware = require('../middleware/auth')
 const validator = require('../middleware/validator')
 
 routes.post('/', authMiddleware.authCheck, validator.valdationResult, seatController.createSeat)
-routes.get('/sold', authMiddleware.authCheck, seatController.getSeatSold)
+routes.post('/sold', authMiddleware.authCheck, seatController.getSeatSold)
 routes.get('/:id', authMiddleware.authCheck, seatController.getDetailSeat)
 routes.get('/', authMiddleware.authCheck, seatController.getSeat)
 
