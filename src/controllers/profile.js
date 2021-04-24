@@ -47,6 +47,7 @@ exports.updateUser = async (req, res) => {
     if (email !== '' && email !== undefined) {
       await authModel.updateUser(id, { email: email })
     }
+
     // Password
     if (password !== '' && password !== undefined) {
       const compare = bcrypt.compareSync(password, initialResults[0].password)
@@ -63,6 +64,7 @@ exports.updateUser = async (req, res) => {
       await authModel.updateUser(id, { phoneNumber: phoneNumber })
     }
 
+    // picture
     if (req.file) {
       const picture = req.file.filename
       // if (picture !== '') {
