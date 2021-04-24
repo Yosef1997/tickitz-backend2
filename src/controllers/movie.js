@@ -108,7 +108,7 @@ exports.createMovie = async (req, res) => {
       description: data.description,
       director: data.director,
       star: data.star,
-      picture: (req.file && req.file.path) || null,
+      picture: req.file.filename || null,
       createdBy: req.userData.id
     }
     const createMovie = await movieModel.createMovie(movieData)

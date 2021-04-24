@@ -66,7 +66,7 @@ exports.createCinema = async (req, res) => {
       name: data.name,
       address: data.address,
       price: data.price,
-      picture: (req.file && req.file.path) || null,
+      picture: (req.file.filename) || null,
       createdBy: req.userData.id
     }
     const createCinema = await cinemaModel.createCinema(cinemaData)
