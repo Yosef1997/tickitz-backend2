@@ -98,3 +98,33 @@ exports.getCountMovie = () => {
     console.log(query.sql)
   })
 }
+
+exports.getAllMovieByMonth = (cond) => {
+  return new Promise((resolve, reject) => {
+    const query = db.query(`
+    SELECT * 
+    FROM movie
+    WHERE releaseDate LIKE "%${cond.search}%"
+    ORDER BY ${cond.sort} ${cond.order}
+    LIMIT ${cond.limit} OFFSET ${cond.offset}
+    `, (err, res, field) => {
+      if (err) reject(err)
+      resolve(res)
+    })
+    console.log(query.sql)
+  })
+}
+
+exports.getCountMovieByMonth = (cond) => {
+  return new Promise((resolve, reject) => {
+    const query = db.query(`
+    SELECT COUNT(id) as totalData 
+    FROM movie 
+    WHERE releaseDate LIKE "%${cond.search}%"
+    `, (err, res, field) => {
+      if (err) reject(err)
+      resolve(res)
+    })
+    console.log(query.sql)
+  })
+}
